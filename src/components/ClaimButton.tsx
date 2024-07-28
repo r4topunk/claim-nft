@@ -55,7 +55,7 @@ function ClaimButton(props: ClaimButtonProps) {
         alert(`Error: ${error.message}`);
       }}
       onTransactionConfirmed={async () => {
-        const res = await fetch("/api/nft", {
+        const res = await fetch("/api/NFT", {
           method: "POST",
           body: JSON.stringify({ uuid: props.uuid, address: account.address }),
           headers: {

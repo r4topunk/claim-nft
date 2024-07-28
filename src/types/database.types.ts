@@ -16,6 +16,7 @@ export type Database = {
           id: number;
           image: string;
           owner: string | null;
+          Tenant: number | null;
           title: string;
           token_id: number;
           uuid: string;
@@ -26,6 +27,7 @@ export type Database = {
           id?: number;
           image?: string;
           owner?: string | null;
+          Tenant?: number | null;
           title?: string;
           token_id?: number;
           uuid?: string;
@@ -36,9 +38,36 @@ export type Database = {
           id?: number;
           image?: string;
           owner?: string | null;
+          Tenant?: number | null;
           title?: string;
           token_id?: number;
           uuid?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "NFTs_Tenant_fkey";
+            columns: ["Tenant"];
+            isOneToOne: false;
+            referencedRelation: "Tenant";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      Tenant: {
+        Row: {
+          created_at: string;
+          id: number;
+          name: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: number;
+          name: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: number;
+          name?: string;
         };
         Relationships: [];
       };

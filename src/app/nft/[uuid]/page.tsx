@@ -1,13 +1,13 @@
 import ClaimButton from "@/components/ClaimButton";
-import { PROJECT_URL } from "@/utils/constants";
+import NftRender from "@/components/NftRender";
+import { IPFS_URL } from "@/utils/constants";
 import { createClient } from "@/utils/supabase/server";
 import { twServerClient } from "@/utils/thirdweb/server";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import QRCode from "react-qr-code";
 import { Address, getContract } from "thirdweb";
 import { zoraSepolia } from "thirdweb/chains";
 import { getNFT } from "thirdweb/extensions/erc1155";
-import { MediaRenderer } from "thirdweb/react";
 
 async function NftPage({ params }: { params: { uuid: string } }) {
   const supabase = createClient();
@@ -33,8 +33,6 @@ async function NftPage({ params }: { params: { uuid: string } }) {
     tokenId: BigInt(supaNft.token_id),
   });
 
-  console.log(nft);
-
   return (
     <div
       className={`
@@ -43,15 +41,6 @@ async function NftPage({ params }: { params: { uuid: string } }) {
         overflow-x-hidden
       `}
     >
-      <QRCode
-        size={128}
-        bgColor="black"
-        fgColor="#B1FD00"
-        value={`${PROJECT_URL}/nft/650b549d-374e-4bcf-9f8e-edfe3ecbfdcb`}
-        className="hidden md:visible"
-      />
-      <MediaRenderer src={nft.metadata.image} client={twServerClient} />
-
       <ClaimButton
         contract={contract}
         quantity={BigInt(1)}
@@ -59,6 +48,19 @@ async function NftPage({ params }: { params: { uuid: string } }) {
         owner={supaNft.owner as Address}
         uuid={params.uuid}
       />
+      {nft.metadata.image && <NftRender src={nft.metadata.image} />}
+      {nft.metadata.external_url && (
+        <>
+          <iframe
+            width="300px"
+            className="aspect-square"
+            src={nft.metadata.external_url.replace("ipfs://", IPFS_URL)}
+          />
+          <Link href={nft.metadata.external_url.replace("ipfs://", IPFS_URL)}>
+            Acesar PDF
+          </Link>
+        </>
+      )}
     </div>
   );
 }
