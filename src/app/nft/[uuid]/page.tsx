@@ -57,7 +57,7 @@ async function NftPage({ params }: { params: { uuid: string } }) {
             src={nft.metadata.external_url.replace("ipfs://", IPFS_URL)}
           />
           <Link href={nft.metadata.external_url.replace("ipfs://", IPFS_URL)}>
-            Acesar PDF
+            Acessar PDF
           </Link>
         </>
       )}
