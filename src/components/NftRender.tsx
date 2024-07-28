@@ -9,7 +9,7 @@ interface NftRenderProps {
 
 function NftRender(props: NftRenderProps) {
   return (
-    <MediaRenderer width="300px" src={props.src} client={thirdwebClient} />
+    <MediaRenderer width="120px" src={props.src} client={thirdwebClient} />
   );
 }
 
